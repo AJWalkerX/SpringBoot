@@ -1,0 +1,13 @@
+server:
+  port: 80
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/springDemo
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
