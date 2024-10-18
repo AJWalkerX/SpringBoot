@@ -6,10 +6,15 @@ server:
 spring:
     datasource:
         driver-class-name: org.postgresql.Driver
-        url: jdbc:postgresql://localhost:5432/stringxdb
-        username: postgres
-        password: root
+        url: ${X_String_postgre_url}
+        username: ${X_String_postgre_username}
+        password: ${X_String_postgre_password}
     jpa:
         hibernate:
             ddl-auto: update
         show-sql: true
+
+java15:
+    jwt:
+        secret-key: ${X_String_JWT_SecretKey}
+        issuer: ${X_String_JWT_Issuer}

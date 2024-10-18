@@ -9,8 +9,7 @@ public class RestAPIs {
 
     private static final String ROOT = VERSION + DEVELOPER;
 
-    //TODO: Burası değişecek
-    public static final String KIRALAMA = ROOT + "/kiralama";
+    public static final String USER = ROOT + "/user";
     public static final String MUSTERI = ROOT + "/musteri";
     public static final String ODA = ROOT + "/oda";
 
@@ -18,5 +17,8 @@ public class RestAPIs {
     public static final String FIND_ALL = "/find-all";
     public static final String FIND_BY_ID = "/find-by-id";
 
-    public static final String GUNU_GECEN_ODALAR = "/gecen-gun-oda-listele";
+    public static final String REGISTER = "/register";
+    public static final String LOGIN = "/login";
+    public static final String GET_PROFILE = "/profile";
+
 }
