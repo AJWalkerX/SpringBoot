@@ -14,6 +14,16 @@ spring:
             ddl-auto: update
         show-sql: true
 
+logging:
+    file:
+        name: proje.log
+    level:
+        root: error #Büyükten küçüğe -> trace -> debug -> info -> warn -> error -> fatal -> off
+        com.ajwalker.controller.UserController: trace
+    logback:
+        rollingpolicy:
+            max-file-size: 2MB
+
 java15:
     jwt:
         secret-key: ${X_String_JWT_SecretKey}

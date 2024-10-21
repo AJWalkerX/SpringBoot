@@ -10,8 +10,7 @@ public class RestAPIs {
     private static final String ROOT = VERSION + DEVELOPER;
 
     public static final String USER = ROOT + "/user";
-    public static final String MUSTERI = ROOT + "/musteri";
-    public static final String ODA = ROOT + "/oda";
+    public static final String POST = ROOT + "/post";
 
     public static final String ADD = "/add";
     public static final String FIND_ALL = "/find-all";
@@ -20,5 +19,7 @@ public class RestAPIs {
     public static final String REGISTER = "/register";
     public static final String LOGIN = "/login";
     public static final String GET_PROFILE = "/profile";
+    public static final String SHARE = "/share";
+
 
 }

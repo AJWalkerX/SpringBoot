@@ -24,5 +24,6 @@ public class Post {
     private Integer commentCount;
     private Integer likeCount;
     private Integer viewCount;
-    private EPostState state;
+    @Builder.Default
+    private EPostState state = EPostState.ACTIVE;
 }
