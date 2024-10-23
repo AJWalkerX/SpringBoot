@@ -3,16 +3,19 @@ package com.ajwalker.service;
 import com.ajwalker.dto.request.NewPostRequestDto;
 import com.ajwalker.dto.response.AllPostResponseDto;
 import com.ajwalker.entity.Post;
+import com.ajwalker.entity.User;
 import com.ajwalker.exception.ErrorType;
 import com.ajwalker.exception.XException;
 import com.ajwalker.mapper.PostMapper;
 import com.ajwalker.repository.IPostRepository;
 import com.ajwalker.utility.JwtManager;
+import com.ajwalker.view.VwUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -20,6 +23,7 @@ import java.util.Optional;
 public class PostService {
     private final IPostRepository postRepository;
     private final JwtManager jwtManager;
+    private final UserService userService;
 
     public void sharePost(NewPostRequestDto dto) {
         Optional<Long> userId = jwtManager.validateToken(dto.token());
@@ -48,15 +52,19 @@ public class PostService {
     public List<AllPostResponseDto> getAllPosts(String token) {
         Optional<Long> userId = jwtManager.validateToken(token);
         if (userId.isEmpty()) throw new XException(ErrorType.INVALID_TOKEN_ERROR);
-        List<Post> postList = postRepository.findAll();
+        List<Post> postList = postRepository.findTop100ByOrderByDateDesc();
         /**
          * postları sıkıtlayın. mesela date e göre son altılmış 10 post
          * post listesinin içerisinden userid lerin listesini çıkartın. List<Long> userids
          * kullanıcıların listesini Map<Long, User> userList
          */
+        List<Long> userIds = postList.stream().map(Post::getUserId).toList();
+        Map<Long,VwUser> userMap = userService.findAllByIds(userIds);
         List<AllPostResponseDto> result = new ArrayList<>();
         postList.forEach(p -> {
-            p.getUserId();
+            VwUser vwUser = userMap.get(p.getUserId());
+            AllPostResponseDto newDto = PostMapper.INSTANCE.fromPostAndUser(p,vwUser.username(), vwUser.name(), vwUser.avatar());
+            result.add(newDto);
         });
         return result;
     }

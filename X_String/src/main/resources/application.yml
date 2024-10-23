@@ -4,6 +4,11 @@ server:
 
 
 spring:
+    security:
+      user:
+          name: alex
+          password:
+
     datasource:
         driver-class-name: org.postgresql.Driver
         url: ${X_String_postgre_url}

@@ -9,11 +9,18 @@ import com.ajwalker.exception.XException;
 import com.ajwalker.mapper.IUserMapper;
 import com.ajwalker.repository.IUserRepository;
 import com.ajwalker.utility.JwtManager;
+import com.ajwalker.view.VwUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
+import java.util.function.Function;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -42,5 +49,18 @@ public class UserService {
         if (userOptional.isEmpty()) //2. aşama kullanıcı kontrollü (kullanıcı var mı?)
             throw new XException(ErrorType.USER_NOT_FOUND_ERROR);
         return userOptional.get();
+    }
+
+    public Map<Long,VwUser> findAllByIds(List<Long> userIds) {
+        return userRepository.findAllByUserIds(userIds)
+                .stream()
+                .collect(Collectors.toMap(
+                        VwUser::id,
+                        vwUser -> vwUser
+                ));
+    }
+
+    public Optional<User> findById(Long userId) {
+    return userRepository.findById(userId);
     }
 }
